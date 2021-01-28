@@ -17,7 +17,7 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+  css: ['@/assets/scss/_globals.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [],
@@ -31,10 +31,15 @@ export default {
     '@nuxt/typescript-build'
   ],
 
+  styleResources: {
+    scss: ['~/assets/scss/style-resources.scss']
+  },
+
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://bulma.io
-    '@nuxtjs/bulma'
+    '@nuxtjs/bulma',
+    '@nuxtjs/style-resources'
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
