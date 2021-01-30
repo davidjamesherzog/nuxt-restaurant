@@ -1,0 +1,57 @@
+<template>
+  <div class="container">
+    <h1 class="title">Reservations</h1>
+    <button class="button is-primary" @click="add">Add</button>
+    <div class="">
+      <table class="table">
+        <thead>
+          <tr>
+            <th><abbr title="Name">Name</abbr></th>
+            <th><abbr title="Email">Email</abbr></th>
+            <th><abbr title="Party Size">Size</abbr></th>
+            <th><abbr title="Date">Date</abbr></th>
+            <th><abbr title="Time">Time</abbr></th>
+            <th><abbr title="Delete"></abbr></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <nuxt-link
+                :to="{ name: 'reservations-id', params: { id: 1 } }"
+                title="Bob"
+                >Bob</nuxt-link
+              >
+            </td>
+            <td>11:00</td>
+            <td>bob@bob.com</td>
+            <td>1/29/21</td>
+            <td>10:00</td>
+            <td>
+              <button class="button is-danger is-small">X</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator';
+
+@Component({
+  name: 'reservations'
+})
+export default class Reservations extends Vue {
+  add() {
+    this.$router.push({
+      path: '/reservations/add'
+    });
+  }
+
+  delete(id: number) {
+    console.log(`Deleting reservation ${id}`);
+  }
+}
+</script>
