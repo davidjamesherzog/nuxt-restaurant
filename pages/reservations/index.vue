@@ -15,7 +15,7 @@
           </tr>
         </thead>
         <tbody v-if="reservations">
-          <tr v-for="(res, index) in reservations" :key="index">
+          <tr v-for="res in reservations" :key="res.id">
             <td>
               <nuxt-link
                 :to="{ name: 'reservations-id', params: { id: res.id } }"
@@ -27,7 +27,12 @@
             <td>{{ res.date }}</td>
             <td>{{ res.time }}</td>
             <td>
-              <button class="button is-danger is-small">X</button>
+              <button
+                class="button is-danger is-small"
+                @click="deleteById(res.id)"
+              >
+                X
+              </button>
             </td>
           </tr>
         </tbody>
@@ -49,6 +54,9 @@ export default class Reservations extends Vue {
   @restaurantModule.Getter('reservations')
   private reservations!: Array<Reservations>;
 
+  @restaurantModule.Action
+  private deleteReservation: any;
+
   // methods
   public add() {
     this.$router.push({
@@ -56,8 +64,8 @@ export default class Reservations extends Vue {
     });
   }
 
-  public delete(id: number) {
-    console.log(`Deleting reservation ${id}`);
+  public deleteById(id: number) {
+    this.deleteReservation(id);
   }
 }
 </script>

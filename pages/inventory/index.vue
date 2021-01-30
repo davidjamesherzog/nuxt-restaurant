@@ -13,7 +13,7 @@
           </tr>
         </thead>
         <tbody v-if="inventory">
-          <tr v-for="(inv, index) in inventory" :key="index">
+          <tr v-for="inv in inventory" :key="inv.id">
             <td>
               <nuxt-link
                 :to="{ name: 'inventory-id', params: { id: inv.id } }"
@@ -23,7 +23,12 @@
             <td>{{ inv.reservations }}</td>
             <td>{{ inv.note }}</td>
             <td>
-              <button class="button is-danger is-small">X</button>
+              <button
+                class="button is-danger is-small"
+                @click="deleteById(inv.id)"
+              >
+                X
+              </button>
             </td>
           </tr>
         </tbody>
@@ -45,6 +50,9 @@ export default class Inventory extends Vue {
   @restaurantModule.Getter('inventory')
   private inventory!: Array<Inventory>;
 
+  @restaurantModule.Action
+  private deleteInventory: any;
+
   // methods
   public add() {
     this.$router.push({
@@ -52,8 +60,8 @@ export default class Inventory extends Vue {
     });
   }
 
-  public delete(id: number) {
-    console.log(`Deleting inventory ${id}`);
+  public deleteById(id: number) {
+    this.deleteInventory(id);
   }
 }
 </script>

@@ -57,6 +57,12 @@ export default class Restaurant extends VuexModule {
   }
 
   @mutation
+  public deleteInventoryById(id: number): void {
+    const index = this._inventory.findIndex((inv: Inventory) => inv.id === id);
+    this._inventory.splice(index, 1);
+  }
+
+  @mutation
   public addReservation(reservation: Reservation): void {
     this._reservations.push(reservation);
   }
@@ -67,6 +73,14 @@ export default class Restaurant extends VuexModule {
       (res: Reservation) => res.id === reservation.id
     );
     this._reservations.splice(index, 1, reservation);
+  }
+
+  @mutation
+  public deleteReservationById(id: number): void {
+    const index = this._reservations.findIndex(
+      (res: Reservation) => res.id === id
+    );
+    this._reservations.splice(index, 1);
   }
 
   // actions
@@ -92,6 +106,12 @@ export default class Restaurant extends VuexModule {
   }
 
   // eslint-disable-next-line require-await
+  @action public async deleteInventory(id: number): Promise<void> {
+    // Should check in the future if any reservations exist for this inventory
+    this.deleteInventoryById(id);
+  }
+
+  // eslint-disable-next-line require-await
   @action
   public async updateReservation(reservation: Reservation): Promise<void> {
     // there would be an API call in here with an await
@@ -110,6 +130,11 @@ export default class Restaurant extends VuexModule {
       (reservation) => reservation.id === id
     )!;
     return reservation;
+  }
+
+  // eslint-disable-next-line require-await
+  @action public async deleteReservation(id: number): Promise<void> {
+    this.deleteReservationById(id);
   }
 
   /* private sortByTime<T>(items: Array<T>): Array<T> {
