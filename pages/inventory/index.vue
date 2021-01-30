@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="page">
     <h1 class="title">Inventory</h1>
     <button class="button is-primary" @click="add">Add</button>
     <div class="">
@@ -12,7 +12,7 @@
             <th><abbr title="Delete"></abbr></th>
           </tr>
         </thead>
-        <tbody>
+        <tbody v-if="inventory">
           <tr v-for="(inv, index) in inventory" :key="index">
             <td>
               <nuxt-link
@@ -42,16 +42,17 @@ const restaurantModule = namespace('restaurant');
   name: 'inventory'
 })
 export default class Inventory extends Vue {
-  @restaurantModule.State('_inventory')
+  @restaurantModule.Getter('inventory')
   private inventory!: Array<Inventory>;
 
-  add() {
+  // methods
+  public add() {
     this.$router.push({
       path: '/inventory/add'
     });
   }
 
-  delete(id: number) {
+  public delete(id: number) {
     console.log(`Deleting inventory ${id}`);
   }
 }

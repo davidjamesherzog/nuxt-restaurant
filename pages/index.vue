@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="page">
     <div>
       <Logo />
       <h1 class="title">wisely</h1>
@@ -23,7 +23,7 @@ export default class Index extends Vue {}
 </script>
 
 <style lang="scss" scoped>
-.container {
+.page {
   margin: 0 auto;
   min-height: 100vh;
   display: flex;

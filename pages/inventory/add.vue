@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="page">
     <h1 class="title">Add Inventory</h1>
     <inventory-form />
   </div>

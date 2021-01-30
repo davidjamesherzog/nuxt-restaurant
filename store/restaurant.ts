@@ -15,6 +15,33 @@ export default class Restaurant extends VuexModule {
   private _inventoryId = 0;
   private _reservationId = 0;
 
+  // getters
+  get inventory(): Array<Inventory> {
+    return this._inventory.sort((a, b) => {
+      if (a.time < b.time) {
+        return -1;
+      }
+      if (a.time > b.time) {
+        return 1;
+      }
+      // times must be equal
+      return 0;
+    });
+  }
+
+  get reservations(): Array<Reservation> {
+    return this._reservations.sort((a, b) => {
+      if (a.time < b.time) {
+        return -1;
+      }
+      if (a.time > b.time) {
+        return 1;
+      }
+      // times must be equal
+      return 0;
+    });
+  }
+
   // mutations
   @mutation
   public addInventory(inventory: Inventory): void {
@@ -84,4 +111,17 @@ export default class Restaurant extends VuexModule {
     )!;
     return reservation;
   }
+
+  /* private sortByTime<T>(items: Array<T>): Array<T> {
+    return items.sort((a, b) => {
+      if (a < b) {
+        return -1;
+      }
+      if (a > b) {
+        return 1;
+      }
+      // times must be equal
+      return 0;
+    });
+  } */
 }

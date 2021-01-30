@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="page">
     <h1 class="title">Reservations</h1>
     <button class="button is-primary" @click="add">Add</button>
     <div class="">
@@ -14,7 +14,7 @@
             <th><abbr title="Delete"></abbr></th>
           </tr>
         </thead>
-        <tbody>
+        <tbody v-if="reservations">
           <tr v-for="(res, index) in reservations" :key="index">
             <td>
               <nuxt-link
@@ -46,17 +46,17 @@ const restaurantModule = namespace('restaurant');
   name: 'reservations'
 })
 export default class Reservations extends Vue {
-  @restaurantModule.State('_reservations')
+  @restaurantModule.Getter('reservations')
   private reservations!: Array<Reservations>;
 
   // methods
-  add() {
+  public add() {
     this.$router.push({
       path: '/reservations/add'
     });
   }
 
-  delete(id: number) {
+  public delete(id: number) {
     console.log(`Deleting reservation ${id}`);
   }
 }

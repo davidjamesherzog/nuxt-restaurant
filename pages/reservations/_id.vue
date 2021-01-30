@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="page">
     <h1 class="title">Edit Reservation</h1>
     <reservation-form :id="id" />
   </div>
