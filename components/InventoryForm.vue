@@ -56,17 +56,37 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator';
+import { Component, Vue, Prop } from 'nuxt-property-decorator';
+import { namespace } from 'vuex-class';
 import Inventory from '../models/Inventory';
 
+const restaurantModule = namespace('restaurant');
+
 @Component({
-  name: 'ReservationForm'
+  name: 'InventoryForm'
 })
 export default class ReservationForm extends Vue {
   private inventory: Inventory = new Inventory();
   private timeError = false;
   private reservationsError = false;
 
+  @Prop()
+  private id!: number;
+
+  @restaurantModule.Action
+  private getInventory: any;
+
+  @restaurantModule.Action
+  private updateInventory: any;
+
+  // lifecycle phases
+  public async mounted() {
+    if (this.id) {
+      this.inventory = await this.getInventory(this.id);
+    }
+  }
+
+  // methods
   submit(e: Event) {
     e.preventDefault();
     this.timeError = false;
@@ -79,7 +99,14 @@ export default class ReservationForm extends Vue {
     if (this.inventory.reservations < 1) {
       this.reservationsError = true;
     }
-    console.log(this.inventory);
+
+    if (this.timeError || this.reservationsError) {
+      return;
+    }
+    this.updateInventory(this.inventory);
+    this.$router.push({
+      path: '/inventory'
+    });
   }
 }
 </script>

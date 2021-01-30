@@ -90,8 +90,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator';
+import { Component, Vue, Prop } from 'nuxt-property-decorator';
+import { namespace } from 'vuex-class';
 import Reservation from '../models/Reservation';
+
+const restaurantModule = namespace('restaurant');
 
 @Component({
   name: 'ReservationForm'
@@ -104,6 +107,23 @@ export default class ReservationForm extends Vue {
   private dateError = false;
   private timeError = false;
 
+  @Prop()
+  private id!: number;
+
+  @restaurantModule.Action
+  private getReservation: any;
+
+  @restaurantModule.Action
+  private updateReservation: any;
+
+  // lifecycle phases
+  public async mounted() {
+    if (this.id) {
+      this.reservation = await this.getReservation(this.id);
+    }
+  }
+
+  // methods
   submit(e: Event) {
     e.preventDefault();
     this.nameError = false;
@@ -131,10 +151,23 @@ export default class ReservationForm extends Vue {
     if (!this.reservation.time) {
       this.timeError = true;
     }
-    console.log(this.reservation);
+
+    if (
+      this.nameError ||
+      this.emailError ||
+      this.sizeError ||
+      this.dateError ||
+      this.timeError
+    ) {
+      return;
+    }
+    this.updateReservation(this.reservation);
+    this.$router.push({
+      path: '/reservations'
+    });
   }
 
-  validEmail(email: string) {
+  private validEmail(email: string) {
     const expression = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return expression.test(email);
   }

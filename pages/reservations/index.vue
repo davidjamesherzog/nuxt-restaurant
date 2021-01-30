@@ -15,18 +15,17 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <tr v-for="(res, index) in reservations" :key="index">
             <td>
               <nuxt-link
-                :to="{ name: 'reservations-id', params: { id: 1 } }"
-                title="Bob"
-                >Bob</nuxt-link
+                :to="{ name: 'reservations-id', params: { id: res.id } }"
+                >{{ res.name }}</nuxt-link
               >
             </td>
-            <td>11:00</td>
-            <td>bob@bob.com</td>
-            <td>1/29/21</td>
-            <td>10:00</td>
+            <td>{{ res.email }}</td>
+            <td>{{ res.size }}</td>
+            <td>{{ res.date }}</td>
+            <td>{{ res.time }}</td>
             <td>
               <button class="button is-danger is-small">X</button>
             </td>
@@ -39,11 +38,18 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator';
+import { namespace } from 'vuex-class';
+
+const restaurantModule = namespace('restaurant');
 
 @Component({
   name: 'reservations'
 })
 export default class Reservations extends Vue {
+  @restaurantModule.State('_reservations')
+  private reservations!: Array<Reservations>;
+
+  // methods
   add() {
     this.$router.push({
       path: '/reservations/add'

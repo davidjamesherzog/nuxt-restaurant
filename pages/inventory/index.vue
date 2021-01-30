@@ -13,16 +13,15 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <tr v-for="(inv, index) in inventory" :key="index">
             <td>
               <nuxt-link
-                :to="{ name: 'inventory-id', params: { id: 1 } }"
-                title="11.00"
-                >11:00</nuxt-link
+                :to="{ name: 'inventory-id', params: { id: inv.id } }"
+                >{{ inv.time }}</nuxt-link
               >
             </td>
-            <td>5</td>
-            <td>Some note</td>
+            <td>{{ inv.reservations }}</td>
+            <td>{{ inv.note }}</td>
             <td>
               <button class="button is-danger is-small">X</button>
             </td>
@@ -35,11 +34,17 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator';
+import { namespace } from 'vuex-class';
+
+const restaurantModule = namespace('restaurant');
 
 @Component({
   name: 'inventory'
 })
 export default class Inventory extends Vue {
+  @restaurantModule.State('_inventory')
+  private inventory!: Array<Inventory>;
+
   add() {
     this.$router.push({
       path: '/inventory/add'
