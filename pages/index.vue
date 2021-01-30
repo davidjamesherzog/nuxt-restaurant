@@ -2,24 +2,12 @@
   <div class="container">
     <div>
       <Logo />
-      <h1 class="title">nuxt-restaurant</h1>
+      <h1 class="title">wisely</h1>
       <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
+        <nuxt-link class="button--green" to="/inventory">Inventory</nuxt-link>
+        <nuxt-link class="button--green" to="/reservations">
+          Reservations
+        </nuxt-link>
       </div>
     </div>
   </div>
@@ -52,6 +40,7 @@ export default class Index extends Vue {}
   font-size: 100px;
   color: #35495e;
   letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 .subtitle {
