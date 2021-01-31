@@ -17,7 +17,7 @@
           />
         </svg>
       </div>
-      <a class="navbar-item header-title" href="/">WISELY</a>
+      <NuxtLink to="/" class="navbar-item header-title"> WISELY </NuxtLink>
       <a
         id="navbar-burger"
         role="button"
