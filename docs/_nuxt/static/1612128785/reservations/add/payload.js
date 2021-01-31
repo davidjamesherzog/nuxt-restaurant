@@ -1,0 +1,1 @@
+__NUXT_JSONP__("/reservations/add", {data:[{}],fetch:[],mutations:[]});

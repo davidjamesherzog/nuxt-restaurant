@@ -1,5 +1,9 @@
 # nuxt-restaurant
 
+The purpose of this repo is to show an example of a restaurant app with inventory and reservations using nuxt.js.  
+
+A running example can be found at [https://davidjamesherzog.github.io/nuxt-restaurant/](https://davidjamesherzog.github.io/nuxt-restaurant/).
+
 ## Build Setup
 
 ```bash

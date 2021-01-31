@@ -1,0 +1,1 @@
+__NUXT_JSONP__("/inventory/add", {data:[{}],fetch:[],mutations:[]});
