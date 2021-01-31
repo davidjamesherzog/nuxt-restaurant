@@ -6,10 +6,9 @@
         <div class="control">
           <div class="select" :class="{ 'is-danger': timeError }">
             <select v-model="inventory.time">
-              <option>10:00</option>
-              <option>10:15</option>
-              <option>10:30</option>
-              <option>10:45</option>
+              <option v-for="time in times" :key="time" :value="time">
+                {{ time }}
+              </option>
             </select>
           </div>
         </div>
@@ -22,7 +21,7 @@
         <label class="label">Reservations</label>
         <div class="control">
           <input
-            v-model="inventory.reservations"
+            v-model.number="inventory.reservations"
             class="input"
             :class="{ 'is-danger': reservationsError }"
             type="text"
@@ -72,6 +71,9 @@ export default class ReservationForm extends Vue {
 
   @Prop()
   private id!: number;
+
+  @restaurantModule.State('_times')
+  private times!: Array<string>;
 
   @restaurantModule.Action
   private getInventory: any;

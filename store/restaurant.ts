@@ -14,6 +14,36 @@ export default class Restaurant extends VuexModule {
   private _reservations: Array<Reservation> = [];
   private _inventoryId = 0;
   private _reservationId = 0;
+  private _times: Array<string> = [
+    '04:00',
+    '04:15',
+    '04:30',
+    '04:45',
+    '05:00',
+    '05:15',
+    '05:30',
+    '05:45',
+    '06:00',
+    '06:15',
+    '06:30',
+    '06:45',
+    '07:00',
+    '07:15',
+    '07:30',
+    '07:45',
+    '08:00',
+    '08:15',
+    '08:30',
+    '08:45',
+    '09:00',
+    '09:15',
+    '09:30',
+    '09:45',
+    '10:00',
+    '10:15',
+    '10:30',
+    '10:45'
+  ];
 
   // getters
   get inventory(): Array<Inventory> {
@@ -135,6 +165,35 @@ export default class Restaurant extends VuexModule {
   // eslint-disable-next-line require-await
   @action public async deleteReservation(id: number): Promise<void> {
     this.deleteReservationById(id);
+  }
+
+  // eslint-disable-next-line require-await
+  @action public async getAvailableTimes(): Promise<Array<string>> {
+    // This function should be achieved via a SQL statement in an API call
+
+    // take reservations and come up with total count for each time
+    const countReservations = (arr: any) =>
+      arr.reduce((prev: any, curr: any) => {
+        prev[curr.time] = ++prev[curr.time] || 1;
+        return prev;
+      }, {});
+    const totalCount: any = countReservations(this._reservations);
+
+    // look for reservations exist for specific time and if they exceed the limit
+    return this._times.filter((time: string) => {
+      const timeInventory: Array<Inventory> = this._inventory.filter(
+        (inventory: Inventory) => inventory.time === time
+      );
+      if (!timeInventory[0]) {
+        return false;
+      }
+
+      const reservations: number = totalCount[time];
+      if (reservations && reservations >= timeInventory[0].reservations) {
+        return false;
+      }
+      return time;
+    });
   }
 
   /* private sortByTime<T>(items: Array<T>): Array<T> {

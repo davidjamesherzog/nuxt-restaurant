@@ -37,7 +37,7 @@
         <label class="label">Party Size</label>
         <div class="control">
           <input
-            v-model="reservation.size"
+            v-model.number="reservation.size"
             class="input"
             :class="{ 'is-danger': sizeError }"
             type="text"
@@ -68,10 +68,9 @@
         <div class="control">
           <div class="select" :class="{ 'is-danger': timeError }">
             <select v-model="reservation.time">
-              <option>10:00</option>
-              <option>10:15</option>
-              <option>10:30</option>
-              <option>10:45</option>
+              <option v-for="time in times" :key="time" :value="time">
+                {{ time }}
+              </option>
             </select>
           </div>
         </div>
@@ -101,6 +100,7 @@ const restaurantModule = namespace('restaurant');
 })
 export default class ReservationForm extends Vue {
   private reservation: Reservation = new Reservation();
+  private times: Array<string> = [];
   private nameError = false;
   private emailError = false;
   private sizeError = false;
@@ -110,6 +110,11 @@ export default class ReservationForm extends Vue {
   @Prop()
   private id!: number;
 
+  // @restaurantModule.State('_times')
+  // @restaurantModule.Getter('timeReducer')
+  @restaurantModule.Action
+  private getAvailableTimes: any;
+
   @restaurantModule.Action
   private getReservation: any;
 
@@ -118,6 +123,7 @@ export default class ReservationForm extends Vue {
 
   // lifecycle phases
   public async mounted() {
+    this.times = await this.getAvailableTimes();
     if (this.id) {
       this.reservation = await this.getReservation(this.id);
     }
