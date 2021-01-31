@@ -189,7 +189,7 @@ export default class Restaurant extends VuexModule {
 
     // take reservations and come up with total count for each time
     const countReservations = (arr: any) =>
-      arr.reduce((prev: any, curr: any) => {
+      arr.reduce((prev: any, curr: Reservation) => {
         prev[curr.time] = ++prev[curr.time] || 1;
         return prev;
       }, {});

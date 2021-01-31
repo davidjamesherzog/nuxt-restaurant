@@ -55,7 +55,7 @@ export default class Reservations extends Vue {
   private reservations!: Array<Reservations>;
 
   @restaurantModule.Action
-  private deleteReservation: any;
+  private deleteReservation!: (id: number) => Promise<void>;
 
   // methods
   public add() {

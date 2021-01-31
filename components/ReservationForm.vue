@@ -111,13 +111,13 @@ export default class ReservationForm extends Vue {
   private id!: number;
 
   @restaurantModule.Action
-  private getReservationTimes: any;
+  private getReservationTimes!: () => Promise<Array<string>>;
 
   @restaurantModule.Action
-  private getReservation: any;
+  private getReservation!: (id: number) => Promise<Reservation>;
 
   @restaurantModule.Action
-  private updateReservation: any;
+  private updateReservation!: (reservation: Reservation) => Promise<void>;
 
   // lifecycle phases
   public async mounted() {

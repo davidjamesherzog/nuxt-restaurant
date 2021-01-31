@@ -51,7 +51,7 @@ export default class Inventory extends Vue {
   private inventory!: Array<Inventory>;
 
   @restaurantModule.Action
-  private deleteInventory: any;
+  private deleteInventory!: (id: number) => Promise<void>;
 
   // methods
   public add() {
