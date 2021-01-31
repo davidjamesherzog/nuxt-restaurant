@@ -66,14 +66,15 @@ const restaurantModule = namespace('restaurant');
 })
 export default class ReservationForm extends Vue {
   private inventory: Inventory = new Inventory();
+  private times: Array<string> = [];
   private timeError = false;
   private reservationsError = false;
 
   @Prop()
   private id!: number;
 
-  @restaurantModule.State('_times')
-  private times!: Array<string>;
+  @restaurantModule.Action
+  private getInventoryTimes: any;
 
   @restaurantModule.Action
   private getInventory: any;
@@ -83,6 +84,7 @@ export default class ReservationForm extends Vue {
 
   // lifecycle phases
   public async mounted() {
+    this.times = await this.getInventoryTimes();
     if (this.id) {
       this.inventory = await this.getInventory(this.id);
     }

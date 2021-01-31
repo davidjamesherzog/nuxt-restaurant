@@ -142,6 +142,22 @@ export default class Restaurant extends VuexModule {
   }
 
   // eslint-disable-next-line require-await
+  @action public async getInventoryTimes(): Promise<Array<string>> {
+    // This function should be achieved via a SQL statement in an API call
+
+    // look for inventory times not already set
+    return this._times.filter((time: string) => {
+      const timeInventory: Array<Inventory> = this._inventory.filter(
+        (inventory: Inventory) => inventory.time === time
+      );
+      if (timeInventory[0]) {
+        return false;
+      }
+      return time;
+    });
+  }
+
+  // eslint-disable-next-line require-await
   @action
   public async updateReservation(reservation: Reservation): Promise<void> {
     // there would be an API call in here with an await
@@ -168,7 +184,7 @@ export default class Restaurant extends VuexModule {
   }
 
   // eslint-disable-next-line require-await
-  @action public async getAvailableTimes(): Promise<Array<string>> {
+  @action public async getReservationTimes(): Promise<Array<string>> {
     // This function should be achieved via a SQL statement in an API call
 
     // take reservations and come up with total count for each time

@@ -110,10 +110,8 @@ export default class ReservationForm extends Vue {
   @Prop()
   private id!: number;
 
-  // @restaurantModule.State('_times')
-  // @restaurantModule.Getter('timeReducer')
   @restaurantModule.Action
-  private getAvailableTimes: any;
+  private getReservationTimes: any;
 
   @restaurantModule.Action
   private getReservation: any;
@@ -123,7 +121,7 @@ export default class ReservationForm extends Vue {
 
   // lifecycle phases
   public async mounted() {
-    this.times = await this.getAvailableTimes();
+    this.times = await this.getReservationTimes();
     if (this.id) {
       this.reservation = await this.getReservation(this.id);
     }
